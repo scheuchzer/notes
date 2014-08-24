@@ -15,9 +15,9 @@
     + smart loader
     + viewpoint
 
-<img src="images/DSC_0009.JPG" width="800"/><br/>
-<img src="images/DSC_0010.JPG" width="800"/><br/>
-<img src="images/DSC_0011.JPG" width="800"/><br/>
+![width800](images/DSC_0009.JPG)<br/>
+![width800](images/DSC_0010.JPG)<br/>
+![width800](images/DSC_0011.JPG)<br/>
 
 
 ## Putting wings on the elephant (Facebook)
@@ -39,11 +39,11 @@
     + [http://en.wikipedia.org/wiki/Team_Role_Inventories](http://en.wikipedia.org/wiki/Team_Role_Inventories)
     + [http://www.mindtools.com/pages/article/newLDR_83.htm](http://www.mindtools.com/pages/article/newLDR_83.htm)
 
-<img src="images/DSC_0013.JPG" width="800"/><br/>
-<img src="images/DSC_0014.JPG" width="800"/><br/>
-<img src="images/DSC_0015.JPG" width="800"/><br/>
-<img src="images/DSC_0017.JPG" width="800"/><br/>
-<img src="images/DSC_0018.JPG" width="800"/><br/>
+![width800](images/DSC_0013.JPG)<br/>
+![width800](images/DSC_0014.JPG)<br/>
+![width800](images/DSC_0015.JPG)<br/>
+![width800](images/DSC_0017.JPG)<br/>
+![width800](images/DSC_0018.JPG)<br/>
 
 ## Hadoop Operations (Spotify)
 - [http://www.jmxtrans.org/](http://www.jmxtrans.org/)
@@ -55,9 +55,9 @@
 - Thompson sampling
 - Result dithering
 
-<img src="images/DSC_0019.JPG" width="800"/><br/>
-<img src="images/DSC_0020.JPG" width="800"/><br/>
-<img src="images/DSC_0022.JPG" width="800"/><br/>
+![width800](images/DSC_0019.JPG)<br/>
+![width800](images/DSC_0020.JPG)<br/>
+![width800](images/DSC_0022.JPG)<br/>
 
 ## Key Notes (Visualisierung)
 - https://openpaths.cc/
@@ -69,13 +69,13 @@
     + [http://en.wikipedia.org/wiki/Bulk_synchronous_parallel](http://en.wikipedia.org/wiki/Bulk_synchronous_parallel)
 - 80% der Experimente auf Big Data schlagen fehl. Darum muss der Round Trip billig sein
 
-<img src="images/DSC_0026.JPG" width="800"/><br/>
+![width800](images/DSC_0026.JPG)<br/>
 
 ## Dis-/Economies of scale
 - RapidMiner: [http://radoop.eu](http://radoop.eu)
 
 ## Diverses
 
-<img src="images/DSC_0023.JPG" width="800"/><br/>
-<img src="images/DSC_0024.JPG" width="800"/><br/>
-<img src="images/DSC_0025.JPG" width="800"/><br/>
+![width800](images/DSC_0023.JPG)<br/>
+![width800](images/DSC_0024.JPG)<br/>
+![width800](images/DSC_0025.JPG)<br/>
