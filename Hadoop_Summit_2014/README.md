@@ -86,11 +86,13 @@
 
 ![width800](images/DSC_0022.JPG)<br/>
 
+
 ## Key Notes (Visualisierung)
 
 - https://openpaths.cc/
 - Cascade visualization
     + [http://nytlabs.com/protect/projects/cascade.html](http://nytlabs.com/protect/projects/cascade.html)
+
 
 ## Big Data History (Teradata)
 
