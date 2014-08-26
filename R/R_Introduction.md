@@ -9,7 +9,7 @@
 The assignment operator is ``<-`` and not ``=``. ``=`` is only used for function arguments.
 
 
-### %% Moduleo
+### %% Modulo
 
 The modulo operator is ``%%`` and not ``%``.
 
@@ -32,17 +32,23 @@ Booleans are ``TRUE`` and ``FALSE``. You could even use the short form ``T`` and
 
 ## Vectors
 
-Propably the most important data structure. 
+Probably the most important data structure. 
 
 
 ### Index
 
-The vector index start at **1** and not 0. 
+The vector index starts at **1** and not 0. 
 
 ```R
 > v <- c(1,2,3)
 > v
 [1] 1 2 3
+> v[1]
+[1] 1
+> v[2]
+[1] 2
+> v[3]
+[1] 3
 ```
 
 
@@ -97,7 +103,7 @@ echo <- function(x) {
 
 
 
-# Default argument values
+## Default argument values
 
 Functions can be defined with default values for its arguments.
 
@@ -110,4 +116,12 @@ say <- function(msg='no') {
 > say('hi')
 [1] "computer says: hi"
 > 
+```
+
+
+
+## Batch Mode
+
+```bash
+R CMD BATCH z.R
 ```
