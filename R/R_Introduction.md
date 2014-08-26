@@ -28,7 +28,13 @@ x <- 42
 
 Booleans are ``TRUE`` and ``FALSE``. You could even use the short form ``T`` and ``F``.
 
+### Help
 
+To get the documentation for a function prefix the command with ``?``.
+
+```R
+?hist
+```
 
 ## Vectors
 
@@ -130,4 +136,26 @@ say <- function(msg='no') {
 
 ```bash
 R CMD BATCH z.R
+```
+
+
+
+## Image/PDF creation
+
+You can redirect all graphical output to a file. Create this special graphical output device with
+
+```R
+pdf('output.pdf')
+# or
+png('output.png')
+```
+
+
+After this, all plots will go to that file. To finish the PDF/PNG document you need to close the graphical device.
+
+```R
+# some plot
+hist(rnorm(100))
+# close the document
+dev.off()
 ```
