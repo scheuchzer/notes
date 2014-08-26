@@ -75,7 +75,13 @@ To select a subset of a vector use the notation ``from:to``.
 
 In this example we select the elements 10 to 15 from a vector with 42 elements. The result is a new vector. The result output starts with index 1 of that new vector.
 
-As you can see, the subset notation also works for the ``c()`` function. We simply concatenate the numbers from 1 to 42. Subset notation is also valid in a for loop declaration ``for (n in 1:100) {}``.
+As you can see, the subset notation also works for the ``c()`` function. We simply concatenate the numbers from 1 to 42. Subset notation is also valid in a for loop declaration:
+
+```R
+for (n in 1:100) {
+	...
+}
+```
 
 
 ## Return values
