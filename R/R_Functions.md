@@ -2,6 +2,26 @@
 
 
 
+## any() / all()
+
+```R
+> x <- 1:10
+> any(x > 8)
+[1] TRUE
+> all(x > 8)
+[1] FALSE
+> any(x > 10)
+[1] FALSE
+> all(x < 11)
+[1] TRUE
+```
+
+
+
+## attributes()
+
+
+
 ## c() - Concatenate
 
 Concatenates vectors.
@@ -33,6 +53,18 @@ Note that even the numbers are vectors in R. They are treated as one-element vec
 ```
 
 
+## cumsum() - Cumulative sum
+
+```R
+> cumsum(c(1:10))
+ [1]  1  3  6 10 15 21 28 36 45 55
+```
+
+
+
+## getwd() / setwd()
+
+
 
 ## length() 
 
@@ -48,46 +80,70 @@ Returns the length of an object like vectors and lists. The vector itself doesn'
 
 
 
-## rnorm() - Normal distribution
+## rep() - Repeat
 
-- [Wikipedia (en)](https://en.wikipedia.org/wiki/Normal_distribution)
-- [Wikipedia (de)](https://de.wikipedia.org/wiki/Normalverteilung)
-
-
-## mean() - Arithmetic mean
-
-- [Wikipedia (en)](https://en.wikipedia.org/wiki/Arithmetic_mean)
-- [Wikipedia (de)](https://de.wikipedia.org/wiki/Arithmetisches_Mittel)
-
-The arithmetic mean (or simply "mean") of a sample ``x1, x2, ..., xn``
-is the sum of the sampled values divided by the number of items in the sample
-
-
-## hist() - Histogram
-
-- [Wikipedia (en)](https://en.wikipedia.org/wiki/Histogram)
-- [Wikipedia (de)](https://de.wikipedia.org/wiki/Histogramm)
-
-In statistics, a histogram is a graphical representation of the distribution of data.
+Fills a vector with the same value
 
 ```R
-hist(rnorm(100))
-
+> rep(1,4)
+[1] 1 1 1 1
 ```
-![](R_Functions_Histogram.png)
-
-
-### Number of columns
-
-The number of columns (classes) is choosen automatically based on your input. It uses the Sturges formula. You can override it by defining the number of ``breaks``.
-
 ```R
-hist(z, breaks=12)
+> rep(c(1,2),2)
+[1] 1 2 1 2
+```
+```R
+> rep(c(1,2), each=2)
+[1] 1 1 2 2
 ```
 
 
 
-## sd() - Standard deviation
+## seq() - Sequence
 
-- [Wikipedia (en)](https://en.wikipedia.org/wiki/Standard_deviation)
-- [Wikipedia (de)](https://de.wikipedia.org/wiki/Standardabweichung)
+```R
+> seq(from=1.1, to=2, length=10)
+ [1] 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0
+```
+
+```R
+> seq(from=0, by=10, length=3)
+[1]  0 10 20
+```
+
+
+```R
+> seq(10)
+ [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+```R
+# gets the indexes of the elements
+> x <- c(10,20,30)
+> seq(x)
+[1] 1 2 3
+```
+
+
+## str() - Structure
+
+Shows the structure of an object
+
+
+
+# sum()
+
+```R
+> sum(c(1:10))
+[1] 55
+```
+
+also see ``cumsum()`` for cumulative sum.
+
+
+
+# summary()
+
+
+
+# typeof()

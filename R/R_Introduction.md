@@ -36,6 +36,16 @@ To get the documentation for a function prefix the command with ``?``.
 ?hist
 ```
 
+
+## Everything is function
+
+```R
+1+2
+# is the same as
+"+"(1,2)
+```
+
+
 ## Vectors
 
 Probably the most important data structure. 
@@ -88,6 +98,7 @@ for (n in 1:100) {
 	...
 }
 ```
+
 
 
 ## Return values
