@@ -6,7 +6,7 @@
 
 ### <- is the new =
 
-The assignment operator is ``<-`` and not ``=``. ``=`` is only used for function arguments.
+The assignment operator is ``<-`` and not ``=``. ``=`` is only used for function arguments and ifs.
 
 
 ### %% Modulo
