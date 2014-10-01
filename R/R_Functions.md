@@ -125,6 +125,10 @@ Fills a vector with the same value
 ```
 
 
+## sapply() - Simmplify apply
+
+
+
 ## str() - Structure
 
 Shows the structure of an object
@@ -147,3 +151,8 @@ also see ``cumsum()`` for cumulative sum.
 
 
 # typeof()
+
+
+
+
+

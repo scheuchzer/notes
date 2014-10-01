@@ -28,6 +28,17 @@ length(x)
 x is a vector of length 1
 
 
+### Vector creation
+
+```R
+y <- c(10, 20)
+#or
+y <- vector(length=2)
+y[1] <- 10
+y[2] <- 20
+```
+
+
 ### Vector operations
 
 Arithmetic functions with vectors are applied element wise
@@ -102,6 +113,33 @@ strsplit("a b c", " ")
 
 A matrix can only contain elements of one mode. Use Data Frames if you need multiple modes.
 
+
+### Matrix creation
+
+
+A matrix is based on a vector. In addition it knows how many columns the matrix contains.
+
+```R
+> m <- matrix(c(1,2,3,4), ncol=2)
+> m
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+```
+In this example the first column get populated first then the second
+
+
+For populating row wise call
+
+```R
+> m <- matrix(c(1,2,3,4), ncol=2, byrow = 2)
+> m
+     [,1] [,2]
+[1,]    1    2
+[2,]    3    4
+```
+
+
 ### Extract submatrixes
 
 ```R
@@ -116,6 +154,23 @@ m[,2]
 ```R
 m %*% m            # matrix multiplication
 ```
+
+Addition with a vector
+```R
+> m <- matrix(c(1,2,3,4), ncol=2, byrow = 2)
+> m + c(10,11,12,13)   # equivalent to m + 10:13
+> m + 10:13
+     [,1] [,2]
+[1,]   11   14
+[2,]   14   17
+```
+What happend? Following operations got executed
+- 1 + 10 = 11
+- 3 + 11 = 14
+- 2 + 12 = 14
+- 4 + 13 = 17
+
+
 
 ### rbind() / cbind() - Row Bind / Column Bind
 
