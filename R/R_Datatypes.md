@@ -1,9 +1,6 @@
 # R - Datatypes
 
 
-![](http://yuml.me/571e3e78)
-
-
 ```yuml
 [Vector]^-[Matrix]
 [Vector]^-[List]
