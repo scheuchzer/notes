@@ -161,4 +161,3 @@ head(t)
 ## Classes
 
 Simple lists with a class name attribute.
-
