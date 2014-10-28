@@ -161,3 +161,5 @@ head(t)
 ## Classes
 
 Simple lists with a class name attribute.
+
+See [R - Classes](R_Classes.md) for details.

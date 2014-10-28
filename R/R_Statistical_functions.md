@@ -25,7 +25,6 @@ In statistics, a histogram is a graphical representation of the distribution of 
 
 ```R
 hist(rnorm(100))
-
 ```
 ![](R_Functions_Histogram.png)
 

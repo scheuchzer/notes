@@ -22,6 +22,23 @@
 
 
 
+## browseEnv() - Browse Objects in Environment
+
+Displays the environment as HTML.
+
+```R
+browseEnv()
+```
+
+or a method only 
+
+```R
+> f <- function(a,b) a*b
+> browseEnv(envir=environment(f))
+```
+
+
+
 ## c() - Concatenate
 
 Concatenates vectors.
@@ -54,6 +71,12 @@ Note that even the numbers are vectors in R. They are treated as one-element vec
 
 
 
+## class
+
+Returns the class name of the given object.
+
+
+
 ## cumprod() - CUmulative product
 
 ```R
@@ -67,7 +90,21 @@ Note that even the numbers are vectors in R. They are treated as one-element vec
 
 ```R
 > cumsum(c(1:10))
- [1]  1  3  6 10 15 21 28 36 45 55
+[1]  1  3  6 10 15 21 28 36 45 55
+```
+
+
+
+## exists() - Object existence
+
+Checks if an object with the given name exists. Note that the name is a string!
+
+```R
+> x <- "a"
+> exists("x")
+[1] TRUE
+> exists("y")
+[1] FALSE
 ```
 
 
@@ -86,7 +123,7 @@ Returns the length of an object like vectors and lists. The vector itself doesn'
 [1] 2
 ```
 
-``length()`` does not work on strings, use ``str_length()`` of the ``stringr`` package instead.
+``length()`` does not work on strings, use `nchar()` or ``str_length()`` of the ``stringr`` package instead.
 
 
 
@@ -94,6 +131,8 @@ Returns the length of an object like vectors and lists. The vector itself doesn'
 
 - Lists currently available local variable names.
 - Use `envir=parent.frame(n=1)` to include objects of parent stackframe as well
+
+Also see `browseEnv()``
 
 
 
@@ -105,6 +144,11 @@ also see `pmin()`/`pmax()`.
 > min(c(5,4,2))
 [1] 2
 ```
+
+
+
+## mode() - Storage mode of an object
+
 
 
 
@@ -124,6 +168,17 @@ Sorts a vector and returns the the indexes of the sorted values, not the values 
 ```R
 > pmin(c(5,4,2), c(1,6,0))
 [1] 1 4 0
+```
+
+
+
+## readline() - Read from keyboard
+
+```R
+> v <- readline("Enter your name: ")
+Enter your name: foo
+> v
+[1] "foo"
 ```
 
 
@@ -159,12 +214,67 @@ Error: object 'x' not found
 ```
 
 
+## save() - Save R Objecs
+
+- Saves R objects to a file
+- Saves the object in a binary format
+- Functions are objects, too
+
+
+```R
+> f <- function(a,b) a*b
+> save(f, file='myfunction')
+> rm(f)
+> f
+Error: object 'f' not found
+> load('myfunction')
+> f(1,2)
+[1] 2
+```
+
+
+## scan() - Read input
+
+- Data is read into a vecor
+- By default the method splits by space, tabs and newlines
+
+
+Read numbers
+
+```R
+v <- scan("data.txt")
+```
+
+
+Read strings
+
+```R
+v <- scan("data.txt", what="")
+```
+
+
+Read lines of strings
+
+```R
+v <- scan("data.txt", what="", sep="\n")
+```
+
+
+Read from keyboard
+
+```R
+v <- scan("")
+```
+
+also see `readline()` to read from keyboard
+
+
 
 ## seq() - Sequence
 
 ```R
 > seq(from=1.1, to=2, length=10)
- [1] 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0
+[1] 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0
 ```
 
 ```R
@@ -175,7 +285,7 @@ Error: object 'x' not found
 
 ```R
 > seq(10)
- [1]  1  2  3  4  5  6  7  8  9 10
+[1]  1  2  3  4  5  6  7  8  9 10
 ```
 
 ```R
@@ -207,7 +317,7 @@ Shows the structure of an object
 
 
 
-# sum()
+## sum()
 
 ```R
 > sum(c(1:10))
@@ -218,13 +328,16 @@ also see ``cumsum()`` for cumulative sum.
 
 
 
-# summary()
+## summary()
 
 
 
-# typeof()
+## typeof()
 
 
 
+## unclass()
+
+Removes class attribute and class specific methods from an object.
 
 
