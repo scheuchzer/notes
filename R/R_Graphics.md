@@ -1,5 +1,7 @@
 # R - Graphics
 
+
+
 ## plot()
 
 - Plot takes two vectors as input parameters
@@ -9,14 +11,14 @@
 
 ### Simple plot
 
-Remember: numbers are vectors, too!
-
 ```R
 plot(1,2)
 ```
 
 ![](R_Graphics_SimplePlot1.png)
 
+
+Remember: numbers are vectors, too!
 
 ```R
 plot(c(1,2,3), c(2,4,9))
@@ -39,7 +41,6 @@ plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y')
 ## Point rendering
 
 You can define a character instead of a circle.
-
 
 ```R
 plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y', pch = "x")
@@ -78,7 +79,6 @@ plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y', type="l", lty = 2)
 ![](R_Graphics_Lines.png)
 
 
-
 ### abline() - Add straight line
 
 ```R
@@ -92,7 +92,6 @@ abline(lmout)
 ![](R_Graphics_abline.png)
 
 
-
 ### lines()
 
 ```R
@@ -103,16 +102,13 @@ lines(c(1,1.5,2,2.5,3), c(2,0.5,2.5,6,1))
 ![](R_Graphics_Lines.png)
 
 
-
 ### smoothing points
 
 Check out `lowess()` and `loess()`.
 
 
 
-
 ## Text
-
 
 ```R
 hist(rnorm(100))
@@ -120,7 +116,6 @@ text(-2.5, 10, "Foo")
 ```
 
 ![](R_Graphics_Text.png)
-
 
 
 Find an exact location. Execute and click on the plot to print out the location clicked.
@@ -154,7 +149,6 @@ text(-1.5, 10, "Foo")
 
 
 
-
 ## Curves
 
 ```R
@@ -184,11 +178,10 @@ polygon(c(1.2,1.5,1.5,1.2), c(0,0,f(1.2), f(1.2)), col="red", density=20)
 Use `xlim` and `ylim`. Notice that these attributes take a vector with from and to as elements!
 
 ```R
-> plot(c(1:10), c(11:20), xlim=c(0,30), ylim=c(0,30))
+plot(c(1:10), c(11:20), xlim=c(0,30), ylim=c(0,30))
 ```
 
 ![](R_Graphics_AxisRange.png)
-
 
 
 
