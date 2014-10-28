@@ -225,6 +225,7 @@ Other formats are supported. Use appropriate function like
 - `jpeg()`
 
 The output size of the image can be set by attributes 
+
 - `with` 
 - `height`
 
