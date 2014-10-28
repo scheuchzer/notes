@@ -53,6 +53,16 @@ Note that even the numbers are vectors in R. They are treated as one-element vec
 ```
 
 
+
+## cumprod() - CUmulative product
+
+```R
+> cumprod(c(1:5))
+[1]   1   2   6  24 120
+```
+
+
+
 ## cumsum() - Cumulative sum
 
 ```R
@@ -80,6 +90,44 @@ Returns the length of an object like vectors and lists. The vector itself doesn'
 
 
 
+## ls() - List Ojbects
+
+- Lists currently available local variable names.
+- Use `envir=parent.frame(n=1)` to include objects of parent stackframe as well
+
+
+
+## min()/max()
+
+also see `pmin()`/`pmax()`.
+
+```R
+> min(c(5,4,2))
+[1] 2
+```
+
+
+
+## order() - Sort and return indexes of
+
+Sorts a vector and returns the the indexes of the sorted values, not the values itself.
+
+```R
+> order(c(4,2,5))
+[1] 2 1 3
+```
+
+
+
+## pmin()/pmax() - Pairwise min/max
+
+```R
+> pmin(c(5,4,2), c(1,6,0))
+[1] 1 4 0
+```
+
+
+
 ## rep() - Repeat
 
 Fills a vector with the same value
@@ -95,6 +143,19 @@ Fills a vector with the same value
 ```R
 > rep(c(1,2), each=2)
 [1] 1 1 2 2
+```
+
+
+
+### rm() - Remove objects from environment
+
+```R
+> x <- 1
+> x
+[1] 1
+> rm(x)
+> x
+Error: object 'x' not found
 ```
 
 
@@ -126,6 +187,17 @@ Fills a vector with the same value
 
 
 ## sapply() - Simmplify apply
+
+
+
+## sort() - Sort
+
+Also see ``order()`` to the the indices of the sorted values.
+
+```R
+> sort(c(4,2,5))
+[1] 2 4 5
+```
 
 
 

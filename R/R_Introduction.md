@@ -170,3 +170,94 @@ hist(rnorm(100))
 # close the document
 dev.off()
 ```
+
+
+
+## Programming Structures
+
+
+### Loops
+
+
+#### For
+```R
+for (n in x) {
+	
+}
+```
+
+```R
+> x <- c(1,2,3)
+> for (n in x) print(n^2)
+[1] 1
+[1] 4
+[1] 9
+```
+
+Use `next` to start the next interation (Java: `continue`)
+
+
+
+#### While
+
+```R
+while (i <= n) {
+	
+}
+```
+
+
+#### Repeat (do-while)
+
+```R
+repeat {
+	...
+	if (i > x) {
+		break
+	}
+}
+```
+
+
+### Operators
+
+```R
+x %% y		# Modulo
+x %/% y		# Integer division
+x && y		# Boolean AND for scalars
+x & y		# Boolean AND for vectors
+x <<- x		# Superassignment (assign non-local variables)
+```
+
+
+#### Write your own operator
+
+Write a function that starts and ends with `%` and that takes two arguments.
+
+```R
+> "%ab10%" <- function(a,b) { return(a*b+10)}
+> 2 %ab10% 3
+[1] 16
+```
+
+
+### Default Values
+
+```R
+> say <- function(msg="hi") {print(msg)}
+> say()
+[1] "hi"
+> say("hello")
+[1] "hello"
+> say(msg="hello")
+[1] "hello"
+```
+
+
+### Return Values
+
+- The value of the last statement is the return value
+- You can also call the `return(x)` function to explicitly end the function
+- Functions can be returned, too
+
+
