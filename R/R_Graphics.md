@@ -76,7 +76,7 @@ Plot a dotted line
 plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y', type="l", lty = 2)
 ```
 
-![](R_Graphics_Lines.png)
+![](R_Graphics_LineType.png)
 
 
 ### abline() - Add straight line
@@ -219,9 +219,14 @@ This will open a new graphic window.
 > dev.off()
 ```
 
-Other formats are supported. Use appropriate function like `pdf()`, `jpeg()`.
+Other formats are supported. Use appropriate function like 
 
-The output size of the image can be set by attributes `with` and `height`.
+- `pdf()`
+- `jpeg()`
+
+The output size of the image can be set by attributes 
+- `with` 
+- `height`
 
 
 
