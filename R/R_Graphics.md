@@ -15,15 +15,25 @@ Remember: numbers are vectors, too!
 plot(1,2)
 ```
 
+![](R_Graphics_SimplePlot1.png)
+
+
 ```R
 plot(c(1,2,3), c(2,4,9))
 ```
+
+![](R_Graphics_SimplePlot2.png)
+
+
 
 ### Labels
 
 ```R
 plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y')
 ```
+
+![](R_Graphics_Labels.png)
+
 
 
 ## Point rendering
@@ -32,8 +42,11 @@ You can define a character instead of a circle.
 
 
 ```R
-plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y', pch = "x)
+plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y', pch = "x")
 ```
+
+![](R_Graphics_PointRendering.png)
+
 
 
 ### Type
@@ -45,6 +58,9 @@ This will connect the points with a line
 ```R
 plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y', type="l")
 ```	
+
+![](R_Graphics_Type.png)
+
 
 
 ## Lines
@@ -59,25 +75,33 @@ Plot a dotted line
 plot(c(1,2,3), c(2,4,9), xlab = 'x', ylab = 'y', type="l", lty = 2)
 ```
 
+![](R_Graphics_Lines.png)
+
+
 
 ### abline() - Add straight line
 
 ```R
-> x <- c(1,2,3)
-> y <- c(1,4,9)
-> plot(x,y)
-> lmout <- lm(y ~ x)
-> abline(lmout)
+x <- c(1,2,3)
+y <- c(1,4,9)
+plot(x,y)
+lmout <- lm(y ~ x)
+abline(lmout)
 ```
+
+![](R_Graphics_abline.png)
+
 
 
 ### lines()
 
 ```R
-> plot(x,y)
-> lines(c(1,1.5,2,2.5,3), c(2,0.5,2.5,6,1))
-> lines(c(1,1.5,2,2.5,3), c(2,0.5,2.5,6,1))
+plot(x,y)
+lines(c(1,1.5,2,2.5,3), c(2,0.5,2.5,6,1))
 ```
+
+![](R_Graphics_Lines.png)
+
 
 
 ### smoothing points
@@ -94,6 +118,9 @@ Check out `lowess()` and `loess()`.
 hist(rnorm(100))
 text(-2.5, 10, "Foo")
 ```
+
+![](R_Graphics_Text.png)
+
 
 
 Find an exact location. Execute and click on the plot to print out the location clicked.
@@ -120,17 +147,22 @@ Use the `cex` attribute. It stands for character expand.
 ```R
 hist(rnorm(100))
 text(0, 10, "Foo", cex=2)
-text(-2.5, 10, "Foo", cex=2)
+text(-1.5, 10, "Foo")
 ```
+
+![](R_Graphics_FontSize.png)
+
 
 
 
 ## Curves
 
 ```R
-> f <- function(x) return(1-exp(-x))
-> curve(f, 0, 10)
+f <- function(x) return(1-exp(-x))
+curve(f, 0, 10)
 ```
+
+![](R_Graphics_Curve.png)
 
 To add a curve to an existing plot add the `add=TRUE` attribute.
 
@@ -139,10 +171,11 @@ To add a curve to an existing plot add the `add=TRUE` attribute.
 ## Plygons
 
 ```R
-> curve(1-exp(-x), 0,2)
-> polygon(c(1.2,1.5,1.5,1.2), c(0,0,f(1.2), f(1.2)), col="red", density=20)	
-
+curve(1-exp(-x), 0,2)
+polygon(c(1.2,1.5,1.5,1.2), c(0,0,f(1.2), f(1.2)), col="red", density=20)
 ```
+
+![](R_Graphics_Polygon.png)
 
 
 
@@ -153,6 +186,9 @@ Use `xlim` and `ylim`. Notice that these attributes take a vector with from and 
 ```R
 > plot(c(1:10), c(11:20), xlim=c(0,30), ylim=c(0,30))
 ```
+
+![](R_Graphics_AxisRange.png)
+
 
 
 
@@ -193,3 +229,12 @@ This will open a new graphic window.
 Other formats are supported. Use appropriate function like `pdf()`, `jpeg()`.
 
 The output size of the image can be set by attributes `with` and `height`.
+
+
+
+## 3D Graphics
+
+- persp()
+- wireframe()
+- cloud()
+
