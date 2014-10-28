@@ -236,4 +236,3 @@ The output size of the image can be set by attributes
 - persp()
 - wireframe()
 - cloud()
-
