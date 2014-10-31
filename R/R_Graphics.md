@@ -130,7 +130,6 @@ Try this!
 
 ```R
 hist(rnorm(100))
-loc <- locator(2) # number of locations to select
 text(locator(1), "Foo")
 ```
 
