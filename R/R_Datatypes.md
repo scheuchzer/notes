@@ -9,6 +9,7 @@
 ```
 
 
+
 ## Vectors
 
 The basis of all R datatypes! Everything is a vector.
@@ -95,9 +96,11 @@ strsplit("a b c", " ")
 ```
 
 
+
 ## Matrices
 
 A matrix can only contain elements of one mode. Use Data Frames if you need multiple modes.
+
 
 ### Extract submatrixes
 
@@ -108,11 +111,13 @@ m[1,]
 m[,2]
 ```
 
+
 ### Arithmetics
 
 ```R
 m %*% m            # matrix multiplication
 ```
+
 
 ### rbind() / cbind() - Row Bind / Column Bind
 
@@ -130,6 +135,7 @@ x <- list(a=1, b="hello")
 x$b
 [1] "hello"
 ```
+
 
 
 ## Data Frames
@@ -157,6 +163,8 @@ t
 class(t)
 head(t)
 ```
+
+
 
 ## Classes
 
