@@ -75,25 +75,7 @@ Exclusions:
 
 ## Strings
 
-
-### paste()
-
-Concatenate the strings delimited by a char. The default delimiter is a space.
-
-```R
-c <- paste("a", "b", "c")
-c
-[1] "a b c"
-```
-
-
-### strspli()
-
-Split by a delimiter
-
-```R
-strsplit("a b c", " ")
-```
+See [R String Functions](R_StringFunctions.html).
 
 
 
