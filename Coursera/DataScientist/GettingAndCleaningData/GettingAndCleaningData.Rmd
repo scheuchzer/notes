@@ -1,0 +1,229 @@
+---
+output: html_document
+---
+# Raw and Processed Data
+
+
+
+# Components of Tidy Data
+
+## Raw Data
+
+It's raw data when:
+
+- Ran no software on the data
+- Didn't manipulate any of the numbers in the data
+- You didn't remove any data from the data set
+- You didn't summarize the data in any way 
+
+## Tidy Data Set
+
+- Each variable is in a separat column
+- Each different observation is in a separate row
+- One table for each "kind" of varable (one table per source)
+- Primary key if you have multiple tables
+
+
+## Code Book
+
+The code book contains the meta-data of your tidy data. It describes each column/variable.
+
+- There should be a section called `Study design` that has a through description of how you collected data
+- There must be a sectionc alled `Code book` that describes each variable and its units
+
+
+## Instruction List
+
+- Ideally a script
+- The input for the script is the raw data
+- The output is processed, tidy data
+- There are no parameters to the script
+
+or describe manual scripts step by step.
+
+
+
+## Downloading Files
+
+```r
+download.file(url,destfile, method	)
+```
+
+```{r}
+if(!file.exists("data")) {
+	dir.create("data")
+}
+url <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"
+download.file(url, destfile="./data/cameras.csv", method="curl")
+list.files("./data")
+```
+
+
+
+## Reading Local Files
+
+```{r}
+data <- read.csv("./data/cameras.csv")
+head(data)
+```
+
+
+
+## Reading Excel Files
+
+```bash
+sudo aptitude install r-cran-rjava
+```
+```r
+install.packages('xlsx')
+```
+
+```{r}
+url <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD"
+download.file(url, destfile="./data/cameras.xlsx", method="curl")
+list.files("./data")
+
+library("xlsx")
+data <- read.xlsx("./data/cameras.xlsx", sheetIndex = 1, header = TRUE)
+head(data)
+```
+
+Also see package `XLConnect` for an alternative.
+
+
+
+## Reading XML Files
+
+```r
+install.packages("XML")
+```
+
+```{r}
+library(XML)
+url <- "http://www.w3schools.com/xml/simple.xml"
+doc <- xmlTreeParse(url, useInternalNodes = TRUE)
+rootNode <- xmlRoot(doc)    
+xmlName(rootNode)
+names(rootNode)
+rootNode[[1]]
+rootNode[[1]][[1]]
+```
+
+Apply a function to xml elements
+
+```{r}
+xmlSApply(rootNode, xmlValue)
+```
+
+
+### X-Path
+
+```{r}
+xpathSApply(rootNode, "//price", xmlValue)
+```
+
+
+## Reading HTML Files
+
+```{r}
+library(XML)
+url <- "http://espn.go.com/nfl/team/_/name/bal/baltimore-ravens"
+doc <- htmlTreeParse(url, useInternalNodes = TRUE)
+xpathSApply(doc, "//li[@class='team-name']", xmlValue)
+```
+
+
+
+## Reading JSON Files
+
+```{r}
+library(jsonlite)
+jsonData <- fromJSON("https://api.github.com/users/jtleek/repos")
+names(jsonData)
+```
+
+
+## Writing JSON Files
+
+```{r}
+myJson <- toJSON(iris[1:2,], pretty=TRUE)
+cat(myJson)
+```
+
+
+
+## data.table
+
+### data frame
+```{r}
+library('data.table')
+df <- data.frame(x=rnorm(9), y=rep(c("a", "b", "c"), each=3), z=rnorm(9))
+head(df, 3)
+```
+
+### table
+
+```{r}
+library('data.table')
+dt <- data.table(x=rnorm(9), y=rep(c("a", "b", "c"), each=3), z=rnorm(9))
+head(dt, 3)
+```
+
+See information about all data tables in memory
+```{r}
+tables()
+```
+
+Calculate values for variables with expressions
+```{r}
+dt[, list(mean(x), sum(z))]
+
+dt[, table(y)]
+dt[, .N, by=y]
+```
+
+Add new columns. **Doesn't copy the values into a new table. Changes the current table!**
+```{r}
+dt[, w:=z^2]
+dt
+```
+
+Multiple operations
+```{r}
+dt[, w:={tmp <- (x+z); log2(tmp+5)}]
+dt
+```
+
+Add booleans depending on a variable
+```{r}
+dt[, a:=x>0]
+dt
+```
+
+
+Group by a variable. Adds the mean of x+w grouped by a. So all rows with the same a will have the same b
+```{r}
+dt[, b:=mean(x+w), by=a]
+dt
+```
+
+Keys. Allows selection without expression for the column
+```{r}
+setkey(dt, y)
+dt['b']
+```
+
+Join
+```{r}
+dt1 <- data.table(x=c('a','a','b', 'dt1'), y=1:4)
+dt2 <- data.table(x=c('a', 'b', 'dt2'), z=5:7)
+setkey(dt1, x)
+setkey(dt2, x)
+merge(dt1, dt2)
+```
+
+fast table reading
+```r
+fread(file)
+```
+
