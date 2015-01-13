@@ -1,0 +1,55 @@
+---
+title: "Quiz2"
+output: html_document
+---
+
+```R
+library('httr')
+library('httpuv')
+library(jsonlite)
+url <- "https://api.github.com/users/jtleek/repos"
+oauth_endpoints("github")
+
+myapp <- oauth_app("github", key="49f83e4153a4b58cbb58", secret = "6212cea3f7533facd2343f690b962a312197b6a0")
+
+github_token <- oauth2.0_token(oauth_endpoints("github"), myapp)
+
+gtoken <- config(token = github_token)
+req <- GET("https://api.github.com/users/jtleek/repos", gtoken)
+stop_for_status(req)
+json1 <- content(req)
+json2 <- jsonlite::fromJSON(toJSON(json1))
+json2$created_at[which(json2$name=='datasharing')]
+```
+
+
+```{r}
+library('sqldf')
+
+if(!file.exists("data")) {
+    dir.create("data")
+}
+url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv'
+download.file(url, destfile="./data/ss06pid.csv", method="curl")
+acs <- read.csv("./data/ss06pid.csv")
+sqldf("select pwgtp1 from acs where AGEP < 50")
+```
+
+
+```{r}
+library('data.table')
+url <- 'http://biostat.jhsph.edu/~jleek/contact.html'
+con <- url(url)
+htmlCode <- readLines(con)
+close(con)
+df <- data.table(htmlCode)
+df[c(10,20,30,100), nchar(htmlCode)]
+```
+
+```{r}
+library('foreign')
+url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fwksst8110.for'
+download.file(url, destfile="./data/wksst8110.for", method="curl")
+df <- read.fwf("./data/wksst8110.for", skip = 4, widths=c(28, 4))
+sum(df$V2)
+```
