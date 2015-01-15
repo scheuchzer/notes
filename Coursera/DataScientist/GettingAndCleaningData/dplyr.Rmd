@@ -1,0 +1,150 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+
+path2csv <- "2014-07-08.csv"
+mydf <- read.csv(path2csv)
+
+cran <- tbl_df(mydf)
+rm("mydf")
+```
+
+# Select
+## Select columns
+
+```{r}
+select(cran, ip_id, package, country)
+
+select(cran, r_arch:country)
+```
+
+## Remove column
+
+```{r}
+select(cran, -time)
+
+select(cran, -(X:size))
+```
+
+# Subsetting
+```{r}
+filter(cran, package == "swirl")
+filter(cran, r_version == "3.1.1", country == "US")
+filter(cran, country == "US" | country == "IN")
+filter(cran, !is.na(r_version))
+```
+
+# Arrange
+## sort by column
+```{r}
+cran2 <- select(cran, package, ip_id)
+arrange(cran2, ip_id)
+arrange(cran2, desc(ip_id))
+arrange(cran2, package, ip_id)
+```
+
+# Mutate
+## Add column
+```{r}
+cran3 <- select(cran, package, size)
+mutate(cran3, size_mb = size / 2^20)
+mutate(cran3, size_mb = size / 2^20, size_gb = size_mb / 2^10)
+mutate(cran3, correct_size = size+1000)
+```
+
+# Summarize
+
+```{r}
+summarize(cran, avg_bytes = mean(size))
+```
+
+# Group
+```{r}
+by_package <- group_by(cran, package)
+```
+by_package has now a Groups attribute. The rest looks the same!
+```{r}
+by_package
+```
+
+now the function given to `summarize()` applies to the groups
+
+```{r}
+summarize(by_package, mean(size)) 
+
+pack_sum <- summarize(by_package,
+                      count = n(),
+                      unique = n_distinct(ip_id),
+                      countries = n_distinct(country),
+                      avg_bytes = mean(size))
+pack_sum
+```
+
+## select entries with the 1% top most downloads
+```{r}
+quantile(pack_sum$count, probs = 0.99)
+top_counts <- filter(pack_sum, count > 679)
+```
+
+
+# Chaining or Piping
+```{r}
+by_package <- group_by(cran, package)
+pack_sum <- summarize(by_package,
+                      count = n(),
+                      unique = n_distinct(ip_id),
+                      countries = n_distinct(country),
+                      avg_bytes = mean(size))
+
+# Here's the new bit, but using the same approach we've
+# been using this whole time.
+
+top_countries <- filter(pack_sum, countries > 60)
+result1 <- arrange(top_countries, desc(countries), avg_bytes)
+
+# Print the results to the console.
+print(result1)
+```
+is the same as
+```{r}
+result2 <-
+  arrange(
+    filter(
+      summarize(
+        group_by(cran,
+                 package
+        ),
+        count = n(),
+        unique = n_distinct(ip_id),
+        countries = n_distinct(country),
+        avg_bytes = mean(size)
+      ),
+      countries > 60
+    ),
+    desc(countries),
+    avg_bytes
+  )
+
+print(result2)
+```
+is the same as
+```{r}
+result3 <-
+  cran %>%
+  # we don't have to specify the cran variable in the dplyr methods when chaining
+  group_by(package) %>%
+  summarize(count = n(),
+            unique = n_distinct(ip_id),
+            countries = n_distinct(country),
+            avg_bytes = mean(size)
+  ) %>%
+  filter(countries > 60) %>%
+  arrange(desc(countries), avg_bytes)
+
+# Print result to console
+print(result3)
+```
