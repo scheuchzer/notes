@@ -1,0 +1,106 @@
+---
+title: "Editing Text Variables"
+output: html_document
+---
+
+## Fixing character vectors - tolower(), toupper()
+
+```{r getData}
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl,destfile="./data/cameras.csv",method="curl")
+cameraData <- read.csv("./data/cameras.csv")
+names(cameraData)
+tolower(names(cameraData))
+```
+
+## Split
+
+```{r}
+splitNames <- strsplit(names(cameraData), "\\.")
+splitNames[[5]]
+splitNames[[6]]
+splitNames[[6]][1]
+
+firstElement <- function(x) {x[1]}
+sapply(splitNames, firstElement)
+```
+
+
+
+```{r reviewDownload, cache=TRUE}
+fileUrl1 <- "https://dl.dropboxusercontent.com/u/7710864/data/reviews-apr29.csv"
+fileUrl2 <- "https://dl.dropboxusercontent.com/u/7710864/data/solutions-apr29.csv"
+download.file(fileUrl1,destfile="./data/reviews.csv",method="curl")
+download.file(fileUrl2,destfile="./data/solutions.csv",method="curl")
+reviews <- read.csv("./data/reviews.csv"); solutions <- read.csv("./data/solutions.csv")
+head(reviews,2)
+head(solutions,2)
+```
+
+## Fixing character vectors - sub()
+
+* Important parameters: _pattern_, _replacement_, _x_
+
+```{r, dependson="reviewDownload"}
+names(reviews)
+sub("_","",names(reviews),)
+
+```
+
+## Replace multiple occurrences - gsub()
+
+```{r}
+text <- "This_is_a_text"
+sub("_", "", text)
+gsub("_", "", text)
+```
+
+## Finding values - grep(),grepl()
+
+```{r,dependson="getData"}
+grep("Alameda",cameraData$intersection) # returns indexes
+table(grepl("Alameda",cameraData$intersection)) # returns true/false
+cameraData2 <- cameraData[grepl(!"Alameda",cameraData$intersection),]
+head(cameraData2)
+grep("Alameda", cameraData$intersection, value = TRUE)
+```
+
+## Package stringr
+
+```{r}
+library(stringr)
+nchar("Thomas Scheuchzer")
+substr("Thomas Scheuchzer", 1, 6)
+paste("Thomas", "Scheuchzer")
+paste0("Thomas", "Scheuchzer")
+str_trim("   abc    ")
+```
+
+## Dates
+
+```{r}
+sd <- Sys.Date()
+sd
+format(sd, "%a %b %d")
+```
+
+### Creating dates
+```{r}
+x <- c("1jan1960", "3jun1960");
+z <- as.Date(x, "%d%b%Y")
+z
+z[2] - z[1]
+as.numeric(z[2] - z[1])
+```
+
+
+### Lubridate
+
+```r
+install.packages("lubridate")
+```
+
+```{r}
+library(lubridate)
+```

@@ -1,0 +1,92 @@
+---
+title: "Quiz4"
+output: html_document
+---
+
+## Question 1
+
+```{r, cache=TRUE}
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv"
+download.file(fileUrl,destfile="./data/ss06hid.csv",method="curl")
+hid <- read.csv("./data/ss06hid.csv")
+```
+
+```{r}
+splitted <- strsplit(names(hid), "wgtp")
+splitted[123]
+```
+
+## Question 2
+
+```{r, cache=TRUE}
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"
+download.file(fileUrl,destfile="./data/FGDP.csv",method="curl")
+data <- read.csv("./data/FGDP.csv")
+```
+
+```{r}
+library(stringr)
+library(dplyr)
+dataRange <- grepl(as.character(data[,2]), pattern = "^[0-9]+$")
+validData <- data[dataRange,]
+head(validData)
+validData <- tbl_df(validData)
+validData %>% 
+    mutate(
+        gdp=as.numeric(gsub(",", "", str_trim(as.character(X.3))))) %>% 
+    summarise(mean(gdp))
+```
+
+## Question 3
+
+```{r}
+countryNames <- validData[4]
+countryNames <- countryNames$X.2
+head(countryNames)
+sum(grepl("^United", as.vector(countryNames)))
+```
+
+## Question 4
+
+```{r, cache=TRUE}
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"
+download.file(fileUrl,destfile="./data/FGDP.csv",method="curl")
+fgdp <- read.csv("./data/FGDP.csv")
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv "
+download.file(fileUrl,destfile="./data/FEDSTATS.csv",method="curl")
+fedstats <- read.csv("./data/FEDSTATS.csv")
+```
+
+```{r}
+head(fgdp)
+fgdpDataRange <- grepl(as.character(data[,2]), pattern = "^[0-9]+$")
+validFgdpData <- data[fgdpDataRange,]
+
+merged <- merge(x = validFgdpData, y = fedstats, by.x = "X", by.y = "CountryCode", all = FALSE)
+head(merged)
+sum(grepl("[Jj]un", merged[, "Special.Notes"]))
+```
+
+## Question 5
+
+```r
+install.packages("quantmod")
+```
+
+```{r, cache=TRUE}
+library(quantmod)
+amzn = getSymbols("AMZN",auto.assign=FALSE)
+sampleTimes = index(amzn) 
+```
+
+
+```{r}
+library(lubridate)
+sum(grepl("^2012-", sampleTimes))
+
+inYear <- grep("^2012-", sampleTimes, value = TRUE)
+sum(wday(ymd(inYear), label = TRUE) == "Mon")
+```
