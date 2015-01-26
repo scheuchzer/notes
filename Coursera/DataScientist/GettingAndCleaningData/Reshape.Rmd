@@ -1,0 +1,43 @@
+---
+title: "Reshape"
+output: html_document
+---
+
+```{r}
+library(reshape2)
+```
+
+Melting data frame
+```{r}
+mtcars$carname <- rownames(mtcars)
+carMelt <- melt(mtcars, id=c("carname", "gear", "cyl"), measure.vars = c("mpg", "hp"))
+head(carMelt)
+tail(carMelt)
+```
+Now first come all `mpg` values then all `hp` values. They are in the columns `variable` and `value`.
+
+Casting
+```{r}
+dcast(carMelt, cyl ~ variable)
+cylData <- dcast(carMelt, cyl ~ variable, mean)
+cylData
+```
+
+Averaging values
+```{r}
+library(dplyr)
+head(InsectSprays)
+tapply(InsectSprays$count, InsectSprays$spray, sum)
+
+summarize(group_by(InsectSprays, spray), count=sum(count))
+```
+
+Split
+```{r}
+spIns <- split(InsectSprays$count, InsectSprays$spray)
+spIns
+sprCount <- lapply(spIns, sum)
+sprCount
+unlist(sprCount)
+sapply(spIns, sum)
+```

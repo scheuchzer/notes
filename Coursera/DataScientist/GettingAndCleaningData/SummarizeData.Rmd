@@ -1,0 +1,29 @@
+---
+title: "Summarize Data"
+output: html_document
+---
+
+```{r}
+data(UCBAdmissions)
+DF <- as.data.frame(UCBAdmissions)
+summary(DF)
+```
+
+Contingency table
+```{r}
+xtabs(Freq ~ Gender + Admit, data=DF)
+```
+
+Flat table
+```{r}
+warpbreaks$replicate <- rep(1:9, len=54)
+xt <- xtabs(breaks ~., data=warpbreaks)
+ftable(xt)
+```
+
+Size of a table (bytes)
+
+```{r}
+object.size(warpbreaks)
+print(object.size(warpbreaks), units="Mb")
+```

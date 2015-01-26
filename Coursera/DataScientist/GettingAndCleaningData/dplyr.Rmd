@@ -3,7 +3,11 @@ title: "Untitled"
 output: html_document
 ---
 
-```{r}
+```R
+install.packages(dplyr)
+```
+
+```{r, prompt=FALSE}
 library(dplyr)
 
 path2csv <- "2014-07-08.csv"
@@ -54,6 +58,12 @@ cran3 <- select(cran, package, size)
 mutate(cran3, size_mb = size / 2^20)
 mutate(cran3, size_mb = size / 2^20, size_gb = size_mb / 2^10)
 mutate(cran3, correct_size = size+1000)
+```
+
+# Rename
+```{r}
+head(cran3, n=1)
+head(rename(cran3, SizeInBytes=size), n=1)
 ```
 
 # Summarize
