@@ -1,0 +1,37 @@
+---
+title: "Principles of Analytic Graphics"
+output: html_document
+---
+
+# Principle 1: Show comparisons
+
+- Evidence for a hypothesis is always relative to another competing hypothesis
+- Alwasys ask "Compared to what?"
+
+# Principle 2: Show casuality, mechanism, explanation, systematic structure
+
+- Show how the world is working at least according to your ideas
+- What's your casual framework for thinking about a question?
+    - What's the explanation for your hipothesis?
+    - Show that evidence in an differnt graphic
+    
+# Principle 3: Show multivariate data
+
+- Multivariate = more the 2 variables
+- The real world is multivariate
+- Need to "escape flatland"
+
+# Principle 4: Integrate multiple modes of evidence
+
+- Completely integrate words, numbers, images, diagrams
+- Data graphics should make use of many modes of data presentation
+- Don't let the tool drive the analysis
+
+# Principle 5: Describe and document the evidence 
+
+- with appropriate labes, scales, sources, etc.
+- A data graphic should tell a complete story that is credible
+
+# Principle 6: Content is King
+
+- Analytical presentations ultimately stand or fall depending on the quality, relevance and integrity of their content

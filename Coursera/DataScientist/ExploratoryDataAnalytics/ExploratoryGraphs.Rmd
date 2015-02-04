@@ -1,0 +1,100 @@
+---
+title: "Exploratory Graphs"
+output: html_document
+---
+
+Graphs that you make more or less for yourself.
+
+# Why graphs?
+
+- To understand data properties (exploratory graphs)
+- To find patterns in data (exploratory graphs)
+- To suggest modelling strategies (exploratory graphs)
+- To debug analyses (exploratory graphs)
+- To communicate results
+
+
+# Characteristics of exploratory graphs
+
+- made quickly
+- a large number are made
+- the goal is for personal understanding
+- axes/legends are generally cleaned up later
+- color/size are primairly used for information
+
+# Simple summaries of data
+
+## One dimension
+
+- Five-number summary
+    - min, 1st qu., median, 3rd qu., max, (and mean)
+    - `summary(data)`
+- Boxplots
+- Histograms
+- Density plot
+- Barplot
+
+### Histogram with rug
+
+```{r}
+data <- rnorm(100)
+hist(data, col='green')
+rug(data)
+```
+
+### Histogram with overlaying features
+
+```{r}
+hist(data, col='green')
+abline(v = 2, lwd=2)
+abline(v = median(data), lwd=2, col="magenta")
+```
+
+### Boxplot
+
+```{r}
+boxplot(data, col='blue')
+# add a line at 1.5
+abline(h = 1.5)
+```
+
+
+
+## Two dimension
+
+- Multiple/overlayed 1-D plots (Lattice/ggplot2)
+- Scatterplots
+- Smooth scatterplots
+
+### Multiple histograms
+
+```{r}
+data1 <- rnorm(100)
+data2 <- rnorm(100)
+par(mfrow = c(2,1), mar = c(4,4,2,1))
+hist(data1, col='green')
+hist(data2, col='green')
+```
+
+
+### Scatterplots with more dimensions
+
+```{r}
+par(mfrow = c(1,1))
+df1 <- data.frame(value=data1, region=sample(rep(1:2, 50)))
+# add an additional dimension by coloring the region column
+with(df1, plot(value, col = region))
+    ```
+## >2 dimension
+
+- Overlayed/multiple 2-D plots; coplots
+- Use color, size to add dimension
+- Spinning plots
+- Actual 3-D plots (not that useful)
+
+
+
+# Resources
+
+- http://rgraphgallery.blogspot.ch/
+- http://www.r-bloggers.com/

@@ -1,0 +1,236 @@
+---
+title: "Plotting Systems"
+output: html_document
+---
+
+There are three plotting systems. 
+
+- The Base Plotting System
+- The Lattice System
+- The ggplot2 System
+
+Don't mix them!
+
+
+
+# The Base Plotting System
+
+- "Artist's palette" model
+- start with a blank canvas and build up from there
+- start with `plot()` or similar
+- use annotation functions to add/modify
+  - text
+  - lines
+  - points
+  - axis
+  
+Good for exploration. But:
+
+- can't go back
+- just a series of R commands 
+    - keep track of them when you explore
+- difficult to translate to others once it has been plotted 
+    - no graphical language
+    
+
+```{r}
+library(datasets)
+data(cars)
+with(cars, plot(speed, dist))
+```
+
+
+The base plotting system is implemented in two packages:
+
+- `graphics`: functions like `plot`, `hist`, `boxplot`
+- `grDevices`: graphics devices like X11, PDF, PNG...
+
+## Configuration
+
+The graphing system can be configured through the `par()` function (global) or as function argument of the plot function.
+
+Important plot parameters:
+
+- pch: the plotting symbol
+- lty: line type
+- lwd: line width
+- col: the plotting color
+    - number, string or hex
+    - `colors()` gives you a vector of colors by name
+- xlab: x-axis label
+- ylab: y-axis label
+
+Important `par` parameters:
+
+- las: orientation of the axis labels on the plot
+- bg: background color
+- mar: margin size
+    - bottom, left, top, right
+- oma: outer margin size
+- mfrow: number of plots per row
+- mfcol: number of plots per column
+
+Get the defaults:
+
+```{r}
+par("bg")
+```
+
+
+## Histogram
+
+```{r}
+library(datasets)
+hist(airquality$Ozon)
+```
+
+## Scatterplot
+
+```{r}
+library(datasets)
+with(airquality, plot(Wind, Ozone))
+```
+
+## Boxplot
+
+```{r}
+library(datasets)
+airquality <- transform(airquality, Month = factor(Month))
+boxplot(Ozone ~ Month, airquality, xlab = "Month", ylab = "Ozone (ppb)")
+```
+
+
+## Annotation functions
+
+- `lines`
+- `legend`
+- `points`
+- `text`: add text to x,y coordinates
+- `title`: x,y labels, title, subtitle, outer margin
+- `mtext`: add text to the margins of the plot 
+- `axis`: ticks and labels
+- `abline`
+
+## Base plot with annotation
+
+We start with an empty plot (`type="n"`) as we paint in two steps without overpainting.
+
+```{r}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", type="n"))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col="blue"))
+with(subset(airquality, Month != 5), points(Wind, Ozone, col="red"))
+legend("topright", pch = 1, col = c("blue", "red"), legend = c("May", "Other months"))
+```
+
+## Base plot with regression line
+
+```{r}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", pch = 20))
+model <- lm(Ozone ~ Wind, airquality)
+abline(model, lwd = 2)
+```
+
+
+## Multiple base plots
+
+```{r}
+par(mfrow = c(1, 2))
+with(airquality, {
+    plot(Wind, Ozone, main = "Ozone and Wind")
+    plot(Solar.R, Ozone, main = "Ozone and Solar Radiation")
+})
+```
+
+
+## Plot to a graphics device
+
+### PDF
+
+```{r}
+library(datasets)
+pdf(file = "test.pdf")
+par(mfrow = c(1,1))
+with(faithful, plot(eruptions, waiting))
+title(main = "Old Faithful Geyser data")
+dev.off()
+```
+
+### Multiple graphics devices
+
+- You can open multiple graphics devices
+- Every open graphics device is assigned an integer >= 2
+
+```{r}
+# Current device
+dev.cur()
+# Change the current device
+dev.set(2)
+```
+
+### Copy plots
+
+Copy from screen to file. Might not look exactly the same!
+
+```{r}
+library(datasets)
+with(faithful, plot(eruptions, waiting))
+title(main = "Old Faithful Geyser data")
+dev.copy(png, file = "test.png")
+dev.off()
+```
+
+## R integrated demo
+
+```r
+example(points)
+```
+
+# The Lattice System
+
+```r
+library("lattice")
+```
+- Single function call for creation
+    - `xyplot`, `bwplot`...
+- most useful for conditioning types of plots
+    - looking at how y changes with x across levels of z
+- margins, spacing... set automatically because entire plot is specified at once
+- good for putting many plots on a screen
+
+Drawbacks:
+
+- sometimes ackward to specify an entire plot in one function call
+- annotation in plot is not especially intuitive
+- you can't modify the plot after creation
+
+```{r}
+library(lattice)
+
+state <- data.frame(state.x77, region = state.region)
+xyplot(Life.Exp ~ Income | region, data = state, layout = c(4,1))
+```
+
+
+The base plotting system is implemented in two packages:
+
+- `lattice`: functions like `xyplot`, `bwplot`, `levelplor`
+- `grid`: the actual implementation of the graphing system on which lattice is based on. Lattice is independend from the base graphing system
+
+
+# The ggplot2 System
+
+```r
+install.packages("ggplot2")
+```
+
+- splits the differences between base and lattice in a number of ways
+- automatically deals with spacing, text, titles but also allows you to annotate by adding to a plot
+- superficial similarity to lattice but generally easier/more intuitive to use
+- default mode makes many choices for you
+    - but you can still customize
+    
+```{r}
+library(ggplot2)
+data(mpg)
+qplot(displ, hwy, data = mpg)
+```
