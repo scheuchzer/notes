@@ -64,6 +64,8 @@
 	- Umgebungsvariablen `ENV`
 	- Führt Befehle aus (zur Buildzeit) `RUN`
 	- Volumes `VOLUME`
+	- Verwendetet Ports `EXPOSE`
+	- Dateien hinzufügen `ADD`
 	- Hat max 1 Einstiegspunkt (zur Laufzeit) `CMD`
 
 Jedes Kommando fügt einen neuen Layer hinzu. Nach dem Befehl wir der Container committed und dient als Ausgangspunkt für den nächsten Schritt.
