@@ -286,14 +286,103 @@ xyplot(y ~ x | f, panel = function(x,y, ...) {
 install.packages("ggplot2")
 ```
 
+Implementation of the "Grammar of Graphics" book.
+
+- needs data frames
 - splits the differences between base and lattice in a number of ways
 - automatically deals with spacing, text, titles but also allows you to annotate by adding to a plot
 - superficial similarity to lattice but generally easier/more intuitive to use
 - default mode makes many choices for you
     - but you can still customize
     
+Best practices:
+
+- use factor variables. ggplot uses the levels for grouping and legends.
+- read the documentation at: http://docs.ggplot2.org/current/ 
+
+## Scatterplots
+
 ```{r}
 library(ggplot2)
 data(mpg)
 qplot(displ, hwy, data = mpg)
+qplot(displ, hwy, data = mpg, color = drv)
+```
+
+Select what to display by defining the `geom` attribute. Here we want to see the data points (`point`) and the trend (`smooth`). The `point` is the default geom if the attribute isn't specified.
+
+```{r}
+qplot(displ, hwy, data = mpg, geom = c("point", "smooth"))
+```
+
+## Histogram
+
+```{r}
+qplot(hwy, data = mpg, fill = drv)
+```
+
+## Facets (Panels)
+
+Syntax: `facets = rows ~ columns`
+
+If we just have one variable simply write a dot `.`.
+
+```{r}
+qplot(displ, hwy, data = mpg, facets = . ~ drv)
+qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
+```
+
+## ggplot2 base function
+
+A ggplot graphic consists out of several layers containing:
+
+- a data frame
+- aesthetic mappings: how data are mapped to color, size
+- geoms: points, lines, shapes
+- facets: for conditional plots
+- stats: statistical transformations like binning, quantiles, smoothing
+- scales: what scale a aesthetic map uses (example: male=red, female=blue)
+- coordinate system
+
+```{r}
+g <- ggplot(mpg, aes(displ, hwy))
+# can't be plotted as we don't have any geoms defined, yet.
+p <- g + geom_point()
+print(p)
+p + geom_smooth(method = "lm") + theme_bw(base_family = "serif")
+g + geom_point() + facet_grid(manufacturer~drv) + geom_smooth(method = "lm")
+```
+
+### Aesthetics
+
+```{r}
+g <- ggplot(mpg, aes(displ, hwy))
+g + geom_point(color = "steelblue", size = 4, alpha = 1/2)
+g + geom_point(aes(color = drv), size = 8, alpha = 1/4) + labs(title = "The Title")
+g + geom_point(aes(color = drv), size = 8, alpha = 1/4) + geom_smooth(size = 2, linetype = 2, method = "lm", se = FALSE)
+```
+
+### Axis limits
+
+With the base library. We don't care about the outlier. The interesting data is between -3 and 3.
+```{r}
+testdata <- data.frame(x = 1:100, y = rnorm(100))
+testdata[50,2] <- 100 #Outlier!
+plot(testdata$x, testdata$y, type="l", ylim = c(-3, 3))
+```
+
+With ggplot2. By default, all values are displayed.
+```{r}
+g <- ggplot(testdata, aes(x = x, y = y))
+g + geom_line()
+```
+
+The `ylim()` function removes data that is not inside the boundaries. This might not be what you really want.
+```{r}
+g + geom_line() + ylim(-3, 3)
+```
+
+To get the same result as with the base plot we have to limit the coordinate system instead.
+```{r}
+g + geom_line() + coord_cartesian(ylim = c(-3,3))
 ```
