@@ -258,14 +258,16 @@ abline(c(0,1))
 
 ```{r}
 library (png)
-library(caTools)
-library(tiff)
-img <- readTIFF("tho.tiff")
-rasterImage(img, 1.2, 1.27, 1.8, 1.73, interpolate=TRUE)
-transparent <- img[,,4] == 0
-img <- as.raster(img[,,1:3])
-img[transparent] <- NA
-image(img)
+library(ripa)
+img <- readPNG("tho.png")
+im <- imagematrix(img)
+par(mfrow=c(1,4))
+image(t(im[,,1])[, nrow(im):1], col = heat.colors(2))
+image(t(im[,,1])[, nrow(im):1], col = heat.colors(4))
+image(t(im[,,1])[, nrow(im):1], col = heat.colors(6))
+image(t(im[,,1])[, nrow(im):1], col = heat.colors(8))
+
+
 ```
 
 
