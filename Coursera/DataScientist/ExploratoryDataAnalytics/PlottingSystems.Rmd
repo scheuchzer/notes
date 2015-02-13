@@ -191,7 +191,7 @@ example(points)
 library("lattice")
 ```
 - Single function call for creation
-    - `xyplot`, `bwplot`...
+    - `xyplot`, `bwplot`, `histogram`, `stripplot`, `dotplot`, `splom`, `levelpolot`, `contourplot`
 - most useful for conditioning types of plots
     - looking at how y changes with x across levels of z
 - margins, spacing... set automatically because entire plot is specified at once
@@ -215,6 +215,69 @@ The base plotting system is implemented in two packages:
 
 - `lattice`: functions like `xyplot`, `bwplot`, `levelplor`
 - `grid`: the actual implementation of the graphing system on which lattice is based on. Lattice is independend from the base graphing system
+
+
+## general usage
+
+```r
+xyplot( y ~ x | f * g, data)
+```
+
+- `y ~ x` the y- and x-axis variable
+- `f * g` conditional variables (optional)
+    - `*` indicates that there is an interaction between two variables
+    
+lattice functions return objects from type `trellis`. As we usually don't store the variable the return objects
+gets `print()`-ed. This is when the plot actually is sent to the graphics device.
+
+## xyplot()
+
+```{r}
+library(lattice)
+library(datasets)
+xyplot(Ozone ~ Wind, data = airquality)
+```
+
+Now month as factor
+
+```{r}
+airquality <- transform(airquality, Month = factor(Month))
+xyplot(Ozone ~ Wind | Month, data = airquality, layout = c(5,1))
+```
+
+
+## Panel function
+
+```{r}
+set.seed(10)
+x <- rnorm(100)
+f <- rep(0:1, each = 50)
+y <- x + f - f * x + rnorm(100, sd = 0.5)
+f <- factor(f, labels = c("Group1", "Group2"))
+xyplot(y ~ x | f, layout = c(2, 1))
+```
+
+Now with panel function that is called for rendering.
+
+```{r}
+xyplot(y ~ x | f, panel = function(x,y, ...) {
+    panel.xyplot(x, y, ...)
+    panel.abline(h = median(y), lty = 2)
+})
+```
+
+```{r}
+xyplot(y ~ x | f, panel = function(x,y, ...) {
+    panel.xyplot(x, y, ...)
+    panel.lmline(x, y, col = 2)
+})
+```
+
+
+
+
+
+
 
 
 # The ggplot2 System
