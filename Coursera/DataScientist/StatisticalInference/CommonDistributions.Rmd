@@ -216,6 +216,8 @@ for $x=0,1,\ldots$
 * The variance of this distribution is $\lambda$
 * Notice that $x$ ranges from $0$ to $\infty$
 
+$s$ for Poission(4) distribution is $2$.
+
 ## Some uses for the Poisson distribution
 * Modeling count data  
 * Modeling event-time or survival data

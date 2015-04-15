@@ -185,8 +185,12 @@ would contain $\mu$
 
 ## Give a confidence interval for the average height of sons
 in Galton's data
+```{r, message=FALSE}
+library(UsingR)
+```
+
 ```{r}
-library(UsingR);data(father.son); x <- father.son$sheight
+data(father.son); x <- father.son$sheight
 (mean(x) + c(-1, 1) * qnorm(.975) * sd(x) / sqrt(length(x))) / 12
 ```
 
@@ -240,7 +244,7 @@ coverage <- sapply(pvals, function(p){
 
 
 ## Plot of the results (not so good)
-```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=6}
+```{r,  fig.align='center', fig.height=6, fig.width=6}
 ggplot(data.frame(pvals, coverage), aes(x = pvals, y = coverage)) + geom_line(size = 2) + geom_hline(yintercept = 0.95) + ylim(.75, 1.0)
 ````
 
