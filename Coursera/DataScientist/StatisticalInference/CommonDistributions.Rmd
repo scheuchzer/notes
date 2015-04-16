@@ -105,6 +105,18 @@ g
 If $X \sim \mbox{N}(\mu,\sigma^2)$ then 
 $$Z = \frac{X -\mu}{\sigma} \sim N(0, 1)$$ 
 
+
+Web page with 100 hits per day, standard deviation of 10. What's the probability that a given day we have fewer than 93 hits.
+
+Convert 93 to standard normal quantile: $\frac{93 - 100}{10}$
+
+```{r}
+(93-100)/10
+pnorm(-0.7)
+# or direct
+pnorm(93, 100, 10)
+```
+
 ### Conversion from standard normal $Z$ to normal $X$
 
 If $Z$ is standard normal $$X = \mu + \sigma Z \sim \mbox{N}(\mu, \sigma^2)$$
