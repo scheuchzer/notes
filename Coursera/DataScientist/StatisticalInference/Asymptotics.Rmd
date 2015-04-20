@@ -194,6 +194,53 @@ data(father.son); x <- father.son$sheight
 (mean(x) + c(-1, 1) * qnorm(.975) * sd(x) / sqrt(length(x))) / 12
 ```
 
+## From apstatsguy.com
+
+[Video](https://www.youtube.com/watch?feature=player_detailpage&list=UUKs7JbggJzbNEIw0t-PaiQA&v=dqgZxu9qc2w)
+
+You sample 83 students and find that 63 regularly copy their homework. Make the 97% interval.
+
+```
+CI = statistic +- critical value * sd
+```
+$$
+\hat p \pm Z^\ast \sqrt{ \frac{\hat p \hat q}{n} }
+$$
+
+```{r}
+n <- 85
+ph <- round(63 / n, 3)
+qh <- 1 - ph
+Zcrit <- round(qnorm( (1-.97)/2, lower.tail = FALSE), 2)
+```  
+
+$\hat p = 63 / 85=`r ph`$  
+$\hat q = 1 - \hat p=`r qh`$
+
+
+$$
+`r ph` \pm `r Zcrit` \sqrt{ \frac{`r ph` * `r qh`}{`r n`}}
+$$
+```{r}
+s <- round(sqrt(ph * qh / n), 4)
+```  
+$$
+`r ph` \pm `r Zcrit` * `r s`
+$$
+```{r}
+err <- Zcrit * s
+``` 
+$$
+`r ph` \pm `r Zcrit * s`
+$$
+
+```{r}
+lb <- round(ph - err, 3)
+ub <- round(ph + err, 3)
+```
+
+97% CI is (`r lb`,  `r ub`)
+
 
 ## Sample proportions
 
