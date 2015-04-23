@@ -62,8 +62,8 @@ $P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}$
 
 - Let $+$ and $-$ be the events that the result of a diagnostic test is positive or negative respectively
 - Let $D$ and $D^c$ be the event that the subject of the test has or does not have the disease respectively 
-- The **sensitivity** is the probability that the test is positive given that the subject actually has the disease, $P(+ ~|~ D)$
-- The **specificity** is the probability that the test is negative given that the subject does not have the disease, $P(- ~|~ D^c)$
+- The **sensitivity** (Richtigpositiv-Rate) is the probability that the test is positive given that the subject actually has the disease, $P(+ ~|~ D)$
+- The **specificity** (Richtignegativ-Rate) is the probability that the test is negative given that the subject does not have the disease, $P(- ~|~ D^c)$
 
 
 ### More definitions
