@@ -148,7 +148,7 @@ g
 * We will typically use Greek letters for things we don't know. 
   Such as, $\mu$ is a mean that we'd like to estimate.
 
----
+
 ## The empirical mean 
 
 * Define the empirical mean as
@@ -167,7 +167,6 @@ The mean of the $\tilde X_i$ is 0.
   \sum_{i=1}^n (X_i - \mu)^2
   $$
 
----
 
 ## The emprical standard deviation and variance
 
@@ -180,7 +179,6 @@ $$
 $S = \sqrt{S^2}$. Notice that the standard deviation has the same units as the data.
 * The data defined by $X_i / s$ have empirical standard deviation 1. This is called "scaling" the data.
 
----
 ## Normalization
 
 * The data defined by
@@ -193,7 +191,6 @@ have empirical mean zero and empirical standard deviation 1.
 * Example, a value of 2 from normalized data means that data point
 was two standard deviations larger than the mean.
 
----
 ## The empirical covariance
 * Consider now when we have pairs of data, $(X_i, Y_i)$.
 * Their empirical covariance is 
@@ -209,7 +206,6 @@ $$
 where $S_x$ and $S_y$ are the estimates of standard deviations 
 for the $X$ observations and $Y$ observations, respectively.
 
----
 ## Some facts about correlation
 * $Cor(X, Y) = Cor(Y, X)$
 * $-1 \leq Cor(X, Y) \leq 1$
