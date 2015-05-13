@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 *.html
+Coursera/DataScientist/StatisticalInference/figure/
+Coursera/DataScientist/RegressionModels/fig/
+Coursera/DataScientist/RegressionModels/elimination.R
