@@ -23,6 +23,28 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 runif(1)
 ```
 
+# Formulas
+
+Model: $\hat y = \beta_0 + \beta_1 x$
+
+- y-intercept + slope * x
+- `^` for predicted
+
+Slope:$\beta_1 = \frac{r S_y}{S_x}$
+
+- $S_y$ Standard deviation for $y$
+- $S_x$ Standard deviation for $x$
+- $\frac{rise}{run}$ How much does $y$ rise when $x$ increases by one unit
+    - here, unit is in standard deviation
+    - therefore $S_y$ and $S_x$
+    - $r$ is the factor for $rise$. How much standard deviation does $y$ rise when $sd(x)$ increases by one standard deviation
+
+y-Intercept: $\beta_0 = \bar y-\beta_1 \hat x$
+
+- `-` for average (mean)
+- $\hat x$ average of all $x$
+- $\hat y$ average of all $y$
+
 # Data Example
 
 ```{r, message=FALSE}
