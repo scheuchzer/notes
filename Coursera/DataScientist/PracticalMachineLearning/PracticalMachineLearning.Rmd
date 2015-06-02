@@ -1,0 +1,307 @@
+---
+title: "Practical Machine Learning"
+output: html_document
+---
+
+## Components of a predictor
+
+question -> input data -> features -> algorithm -> parameters -> evaluation
+
+## SPAM example
+
+Question: Can we detect spam?
+
+Input Data: spam dataset from kernlab
+
+Features: for example the word 'your'
+
+```{r}
+library(kernlab)
+data(spam)
+head(spam)
+
+plot(density(spam$your[spam$type=="nonspam"]), col="blue", main="", xlab="Frequency of 'your'")
+lines(density(spam$your[spam$type=="spam"]), col="red")
+```
+
+very simple predictor
+
+Algorithm: Spam if 'your' count > 0.5
+Parameter: count > 0.5
+```{r}
+plot(density(spam$your[spam$type=="nonspam"]), col="blue", main="", xlab="Frequency of 'your'")
+lines(density(spam$your[spam$type=="spam"]), col="red")
+abline(v=0.5, col="black")
+prediction <- ifelse(spam$your > 0.5, "spam", "nonspam")
+table(prediction, spam$type)/length(spam$type)
+```
+
+Evaluation: Accuracy $\approx$ 0.459 + 0.292 = 0.751
+
+
+## Features matter!
+
+Properties of good features
+
+- Lead to data compression
+- Retain relevant information
+- Are created based on expert application knowledge
+
+Common mistakes
+
+- Trying to automate feature selection
+- Not paying attention to data-specific quirks
+- Throwing away information unnecessarily
+
+## Issues to consider
+
+The "Best" Machine Learning Method
+
+- Interpretable
+- Simple
+- Fast (to train and test)
+- Scalable
+- Accurate
+
+## Prediction is about accuracy tradeoffs
+
+- Interpretability versus accuracy
+- Speed versus accuracy
+- Simplicity versus accuracy
+- Scalability versus accuracy
+
+## In sample and out of sample error
+
+### In sample error
+
+The error rate you get on the same data set you used to build your predictor.
+
+Sometimes called resubstitution error.
+
+### Out of sample error
+
+The error rate you get on a new data set.
+
+Sometimes called gerneralization error.
+
+### Key Ideas
+
+- Out of sample error is what you care about
+- In sample error < out of sample error
+- The reason is overfitting
+  - Matching your algorithm to the data you have
+
+
+## Prediction study design
+
+1. Define your error rate
+2. Split data into:
+  - Training, Testing, Validation (optional)
+3. On the training set pick features
+  - Use cross-validation
+4. On the training set pick prediction function
+  - Use cross-validation
+5. If no validation
+  - Apply 1x to test set
+6. If validation
+  - Apply to test set and refine
+  - Apply 1x to validation
+  
+- set the test/validation set aside and don't look at it
+- in general randomly sample training and test
+- your data sets must reflect structure of the problem
+  - if prediction evolve with time split train/test in time chunks (called backtesting in finance)
+- all subsets should reflect as much diversity as possible
+  - random assignment does this
+  - you can also try to balance by feature - but this is tricky
+
+## Types of error
+
+### Basic terms
+In general, __Positive__ = identified and __negative__ = rejected. Therefore:
+
+__True positive__ = correctly identified
+
+__False positive__ = incorrectly identified
+
+__True negative__ = correctly rejected
+
+__False negative__ = incorrectly rejected
+
+_Medical testing example_:
+
+__True positive__ = Sick people correctly diagnosed as sick
+
+__False positive__= Healthy people incorrectly identified as sick
+
+__True negative__ = Healthy people correctly identified as healthy
+
+__False negative__ = Sick people incorrectly identified as healthy.
+
+### Key quantities
+
+<table border=1>
+<tr><th rowspan='4>TEST</th><th colspan=3>DISEASE</th></tr>
+<tr><th>&nbsp;</th><th>+</th><th>-</th></tr>
+<tr><th>+</th><td>TP</td><td>FP</td></tr>
+<tr><th>-</th><td>FN</td><td>TN</td></tr>
+</table>
+
+
+- **Sensitivity**   ->  Pr( positive test | disease )
+- **Specifity**     ->  Pr( negative test | no desease )
+- **Positive Predictive Value**  -> Pr( disease | positive test )
+- **Negative Predictive Value**  -> Pr( no disease | negative test )
+- **Accuracy**      ->  Pr( correct outcome )
+
+### Key quantities as fractions
+
+- **Sensitivity**   ->  TP / (TP+FN)
+- **Specifity**     ->  TN / (FP+TN)
+- **Positive Predictive Value**  -> TP / (TP+FP)
+- **Negative Predictive Value**  -> TN / (FN+TN)
+- **Accuracy**      ->  (TP+TN) / (TP+FP+FN+TN)
+
+### For continuous data
+
+__Mean squared error (MSE)__:
+
+$$\frac{1}{n} \sum_{i=1}^n (Prediction_i - Truth_i)^2$$
+
+__Root mean squared error (RMSE)__:
+
+$$\sqrt{\frac{1}{n} \sum_{i=1}^n(Prediction_i - Truth_i)^2}$$
+
+---
+
+### Common error measures
+
+1. Mean squared error (or root mean squared error)
+  * Continuous data, sensitive to outliers
+2. Median absolute deviation 
+  * Continuous data, often more robust
+3. Sensitivity (recall)
+  * If you want few missed positives
+4. Specificity
+  * If you want few negatives called positives
+5. Accuracy
+  * Weights false positives/negatives equally
+6. Concordance
+  * One example is [kappa](http://en.wikipedia.org/wiki/Cohen%27s_kappa)
+5. Predictive value of a positive (precision)
+  * When you are screeing and prevelance is low
+  
+#ROC curves (Receiver operating characteristic)
+
+## Why a curve?
+
+* In binary classification you are predicting one of two categories
+  * Alive/dead
+  * Click on ad/don't click
+* But your predictions are often quantitative
+  * Probability of being alive
+  * Prediction on a scale from 1 to 10
+* The _cutoff_  you choose gives different results
+
+## ROC curves
+
+<img class=center src=roc1.png height=400>
+
+[http://en.wikipedia.org/wiki/Receiver_operating_characteristic](http://en.wikipedia.org/wiki/Receiver_operating_characteristic)
+
+
+
+## An example
+
+<img class=center src=roc2.png height=400>
+
+[http://en.wikipedia.org/wiki/Receiver_operating_characteristic](http://en.wikipedia.org/wiki/Receiver_operating_characteristic)
+
+
+
+## Area under the curve
+
+<img class=center src=roc1.png height=200>
+
+* AUC = 0.5: random guessing
+* AUC = 1: perfect classifer
+* In general AUC of above 0.8 considered "good"
+
+[http://en.wikipedia.org/wiki/Receiver_operating_characteristic](http://en.wikipedia.org/wiki/Receiver_operating_characteristic)
+
+
+## What is good?
+
+<img class=center src=roc3.png height=400>
+
+[http://en.wikipedia.org/wiki/Receiver_operating_characteristic](http://en.wikipedia.org/wiki/Receiver_operating_characteristic)
+
+
+# Cross-Validation
+
+## Study design
+
+<img class=center src=studyDesign.png height=400>
+
+
+[http://www2.research.att.com/~volinsky/papers/ASAStatComp.pdf](http://www2.research.att.com/~volinsky/papers/ASAStatComp.pdf)
+
+
+## Key idea
+
+1. Accuracy on the training set (resubstitution accuracy) is optimistic
+2. A better estimate comes from an independent set (test set accuracy)
+3. But we can't use the test set when building the model or it becomes part of the training set
+4. So we estimate the test set accuracy with the training set. 
+
+
+## Cross-validation
+
+_Approach_:
+
+1. Use the training set
+
+2. Split it into training/test sets 
+
+3. Build a model on the training set
+
+4. Evaluate on the test set
+
+5. Repeat and average the estimated errors
+
+_Used for_:
+
+1. Picking variables to include in a model
+
+2. Picking the type of prediction function to use
+
+3. Picking the parameters in the prediction function
+
+4. Comparing different predictors
+
+## Random subsampling
+
+
+<img class=center src=random.png height=400>
+
+
+## K-fold
+
+
+<img class=center src=kfold.png height=400>
+
+## Leave one out
+
+<img class=center src=loocv.png height=400>
+
+## Considerations
+
+* For time series data data must be used in "chunks"
+* For k-fold cross validation
+  * Larger k = less bias, more variance
+  * Smaller k = more bias, less variance
+* Random sampling must be done _without replacement_
+* Random sampling with replacement is the _bootstrap_
+  * Underestimates of the error
+  * Can be corrected, but it is complicated ([0.632 Bootstrap](http://www.jstor.org/discover/10.2307/2965703?uid=2&uid=4&sid=21103054448997))
+* If you cross-validate to pick predictors estimate you must estimate errors on independent data. 
