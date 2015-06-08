@@ -820,3 +820,42 @@ follows a $T$ distribution with $n-p$ degrees of freedom.
   * Uncover complex multivariate relationships with the response.
   * Build accurate prediction models.
 
+
+## Finding outliers
+
+Larger means more influence for the model (max 1)
+```
+hatvalues(fit)
+
+```
+
+Residuals vs Fitted
+```
+plot(fit, which=1)
+```
+
+Scale-Location
+```
+plot(fit, which=3)
+```
+
+Normal Q-Q
+```
+plot(fit, which=2)
+```
+
+
+rstandard(fit)
+rstudent(fit)
+
+cooks.distance(fit) 
+Distance Plot / Residuals vs Leverage
+plot(fit, which=5)
+
+
+# Variance Influation
+
+A VIF describes the increase in the variance of a coefficient due to the correlation of its regressor with the other regressors.
+
+vif(fit)
+
