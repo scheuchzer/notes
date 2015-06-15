@@ -1,0 +1,202 @@
+---
+title: "Caret Package"
+author: "Thomas Scheuchzer <thomas.scheuchzer@gmx.net>"
+date: "Monday, June 08, 2015"
+output: html_document
+---
+
+## The caret R package
+
+http://topepo.github.io/caret/
+
+The caret package (short for Classification And REgression Training) is a set of functions that attempt to streamline the process for creating predictive models. The package contains tools for:
+
+- data splitting
+- pre-processing
+- feature selection
+- model tuning using resampling
+- variable importance estimation
+
+as well as other functionality.
+
+## Caret functionality
+
+* Some preprocessing (cleaning)
+  * preProcess
+* Data splitting
+  * createDataPartition
+  * createResample
+  * createTimeSlices
+* Training/testing functions
+  * train
+  * predict
+* Model comparison
+  * confusionMatrix
+
+
+## Why caret? 
+
+<img class=center src=predicttable.png height=250>
+
+
+## SPAM Example: Data splitting
+
+```{r loadPackage}
+library(caret); library(kernlab); data(spam)
+inTrain <- createDataPartition(y=spam$type,
+                              p=0.75, list=FALSE)
+training <- spam[inTrain,]
+testing <- spam[-inTrain,]
+dim(training)
+```
+
+## SPAM Example: Fit a model
+
+```{r training, dependson="loadPackage",cache=TRUE}
+set.seed(32343)
+modelFit <- train(type ~.,data=training, method="glm")
+modelFit
+```
+
+## SPAM Example: Final model
+
+```{r finalModel, dependson="training",cache=TRUE}
+modelFit <- train(type ~.,data=training, method="glm")
+modelFit$finalModel
+```
+
+## SPAM Example: Prediction
+
+```{r predictions, dependson="training",cache=TRUE}
+predictions <- predict(modelFit,newdata=testing)
+head(predictions)
+```
+
+## SPAM Example: Confusion Matrix
+
+```{r confusion, dependson="predictions",cache=TRUE}
+confusionMatrix(predictions,testing$type)
+```
+
+# Data Slicing
+
+## SPAM Example: Data splitting
+
+```{r}
+library(caret); library(kernlab); data(spam)
+inTrain <- createDataPartition(y=spam$type,
+                              p=0.75, list=FALSE)
+training <- spam[inTrain,]
+testing <- spam[-inTrain,]
+dim(training)
+```
+
+
+## SPAM Example: K-fold
+
+Used for cross validation.
+
+```{r kfold,dependson="loadPackage"}
+set.seed(32323)
+folds <- createFolds(y=spam$type,k=10,
+                             list=TRUE,returnTrain=TRUE)
+sapply(folds,length)
+folds[[1]][1:10]
+```
+
+## SPAM Example: Return test
+
+```{r kfoldtest,dependson="loadPackage"}
+set.seed(32323)
+folds <- createFolds(y=spam$type,k=10,
+                             list=TRUE,returnTrain=FALSE)
+sapply(folds,length)
+folds[[1]][1:10]
+```
+
+## SPAM Example: Resampling
+
+```{r resample,dependson="loadPackage"}
+set.seed(32323)
+folds <- createResample(y=spam$type,times=10,
+                             list=TRUE)
+sapply(folds,length)
+folds[[1]][1:10]
+```
+
+## SPAM Example: Time Slices
+
+```{r time,dependson="loadPackage"}
+set.seed(32323)
+tme <- 1:1000
+folds <- createTimeSlices(y=tme,initialWindow=20,
+                          horizon=10)
+names(folds)
+folds$train[[1]]
+folds$test[[1]]
+```
+
+# Train Options
+
+```{r cache=TRUE}
+library(caret); library(kernlab); data(spam)
+inTrain <- createDataPartition(y=spam$type,
+                              p=0.75, list=FALSE)
+training <- spam[inTrain,]
+testing <- spam[-inTrain,]
+modelFit <- train(type ~.,data=training, method="glm")
+```
+
+## Train options
+
+```{r ,dependson="loadPackage"}
+args(train.default)
+```
+
+## Metric options
+
+__Continous outcomes__:
+  * _RMSE_ = Root mean squared error
+  * _RSquared_ = $R^2$ from regression models
+
+__Categorical outcomes__:
+  * _Accuracy_ = Fraction correct
+  * _Kappa_ = A measure of [concordance](http://en.wikipedia.org/wiki/Cohen%27s_kappa)
+  
+## trainControl
+
+```{r , dependson="loadPackage",cache=TRUE}
+args(trainControl)
+```  
+
+## trainControl resampling
+
+* _method_
+  * _boot_ = bootstrapping
+  * _boot632_ = bootstrapping with adjustment
+  * _cv_ = cross validation
+  * _repeatedcv_ = repeated cross validation
+  * _LOOCV_ = leave one out cross validation
+* _number_
+  * For boot/cross validation
+  * Number of subsamples to take
+* _repeats_
+  * Number of times to repeate subsampling
+  * If big this can _slow things down_
+
+## Setting the seed
+
+* It is often useful to set an overall seed
+* You can also set a seed for each resample
+* Seeding each resample is useful for parallel fits
+
+
+## seed example
+
+```{r , dependson="seedExample",cache=TRUE}
+set.seed(1235)
+modelFit2 <- train(type ~.,data=training, method="glm")
+modelFit2
+```
+
+
