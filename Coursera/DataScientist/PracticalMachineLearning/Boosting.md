@@ -1,21 +1,5 @@
----
-title       : Boosting
-subtitle    : 
-author      : Jeffrey Leek
-job         : Johns Hopkins Bloomberg School of Public Health
-logo        : bloomberg_shield.png
-framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
-highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow   # 
-url:
-  lib: ../../librariesNew
-  assets: ../../assets
-widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft}
-output:
-  html_document:
-    keep_md: true
----
+# Boosting
+Jeffrey Leek  
 
 
 ## Basic idea
@@ -94,7 +78,8 @@ $f(x) = \rm{sgn}\left(\sum_{t=1}^T \alpha_t h_t(x)\right)$.
 
 ## Wage example
 
-```{r wage, cache=TRUE, message=FALSE}
+
+```r
 library(ISLR); data(Wage); library(ggplot2); library(caret);library(gbm)
 Wage <- subset(Wage,select=-c(logwage))
 inTrain <- createDataPartition(y=Wage$wage,
@@ -107,20 +92,57 @@ training <- Wage[inTrain,]; testing <- Wage[-inTrain,]
 
 ## Fit the model
 
-```{r, dependson="wage", cache=TRUE, message=FALSE, warning=FALSE}
+
+```r
 modFit <- train(wage ~ ., method="gbm",data=training,verbose=FALSE)
 ```
-```{r}
+
+```r
 print(modFit)
+```
+
+```
+## Stochastic Gradient Boosting 
+## 
+## 2102 samples
+##   10 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## 
+## Summary of sample sizes: 2102, 2102, 2102, 2102, 2102, 2102, ... 
+## 
+## Resampling results across tuning parameters:
+## 
+##   interaction.depth  n.trees  RMSE      Rsquared   RMSE SD   Rsquared SD
+##   1                   50      35.05213  0.3167282  1.510565  0.02705074 
+##   1                  100      34.43894  0.3271179  1.402449  0.02496479 
+##   1                  150      34.32547  0.3297737  1.379183  0.02362251 
+##   2                   50      34.43709  0.3282637  1.427921  0.02643906 
+##   2                  100      34.31153  0.3301177  1.343264  0.02373543 
+##   2                  150      34.41705  0.3260714  1.340101  0.02199417 
+##   3                   50      34.32653  0.3300645  1.381012  0.02518520 
+##   3                  100      34.44602  0.3251785  1.238868  0.02213218 
+##   3                  150      34.66476  0.3183714  1.253169  0.02281529 
+## 
+## Tuning parameter 'shrinkage' was held constant at a value of 0.1
+## 
+## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
+## RMSE was used to select the optimal model using  the smallest value.
+## The final values used for the model were n.trees = 100,
+##  interaction.depth = 2, shrinkage = 0.1 and n.minobsinnode = 10.
 ```
 
 ---
 
 ## Plot the results
 
-```{r, dependson="wage", fig.height=4,fig.width=4}
+
+```r
 qplot(predict(modFit,testing),wage,data=testing)
 ```
+
+![](Boosting_files/figure-html/unnamed-chunk-3-1.png) 
 
 
 

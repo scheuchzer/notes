@@ -2,7 +2,9 @@
 title: "Caret Package"
 author: "Thomas Scheuchzer <thomas.scheuchzer@gmx.net>"
 date: "Monday, June 08, 2015"
-output: html_document
+output:
+  html_document:
+    keep_md: true
 ---
 
 ## The caret R package

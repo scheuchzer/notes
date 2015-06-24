@@ -1,21 +1,5 @@
----
-title       : Predicting with trees
-subtitle    : 
-author      : Jeffrey Leek
-job         : Johns Hopkins Bloomberg School of Public Health
-logo        : bloomberg_shield.png
-framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
-highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow   # 
-url:
-  lib: ../../librariesNew
-  assets: ../../assets
-widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft}
-output:
-  html_document:
-    keep_md: true
----
+# Predicting with trees
+Jeffrey Leek  
 
 
 ## Key ideas
@@ -92,10 +76,7 @@ http://en.wikipedia.org/wiki/Decision_tree_learning
 
 *** =left
 
-```{r leftplot,fig.height=3,fig.width=4,echo=FALSE,fig.align="center"}
-par(mar=c(0,0,0,0)); set.seed(1234); x = rep(1:4,each=4); y = rep(1:4,4)
-plot(x,y,xaxt="n",yaxt="n",cex=3,col=c(rep("blue",15),rep("red",1)),pch=19)
-```
+<img src="PredictingWithTrees_files/figure-html/leftplot-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 * __Misclassification:__ $1/16 = 0.06$
 * __Gini:__ $1 - [(1/16)^2 + (15/16)^2] = 0.12$
@@ -103,10 +84,7 @@ plot(x,y,xaxt="n",yaxt="n",cex=3,col=c(rep("blue",15),rep("red",1)),pch=19)
 
 *** =right
 
-```{r,fig.height=3,fig.width=4,echo=FALSE,fig.align="center"}
-par(mar=c(0,0,0,0)); 
-plot(x,y,xaxt="n",yaxt="n",cex=3,col=c(rep("blue",8),rep("red",8)),pch=19)
-```
+<img src="PredictingWithTrees_files/figure-html/unnamed-chunk-1-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 * __Misclassification:__ $8/16 = 0.5$
 * __Gini:__ $1 - [(8/16)^2 + (8/16)^2] = 0.5$
@@ -119,10 +97,25 @@ plot(x,y,xaxt="n",yaxt="n",cex=3,col=c(rep("blue",8),rep("red",8)),pch=19)
 
 ## Example: Iris Data
 
-```{r iris, cache=TRUE}
+
+```r
 data(iris); library(ggplot2)
 names(iris)
+```
+
+```
+## [1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width" 
+## [5] "Species"
+```
+
+```r
 table(iris$Species)
+```
+
+```
+## 
+##     setosa versicolor  virginica 
+##         50         50         50
 ```
 
 
@@ -130,7 +123,8 @@ table(iris$Species)
 
 ## Create training and test sets
 
-```{r trainingTest, dependson="iris",cache=TRUE}
+
+```r
 library(caret)
 inTrain <- createDataPartition(y=iris$Species,
                               p=0.7, list=FALSE)
@@ -139,14 +133,12 @@ testing <- iris[-inTrain,]
 dim(training); dim(testing)
 ```
 
+```
+## [1] 105   5
+```
 
----
-
-## Iris petal widths/sepal width
-
-```{r, dependson="trainingTest",fig.height=4,fig.width=6}
-library(ggplot2)
-qplot(Petal.Width,Sepal.Width,colour=Species,data=training)
+```
+## [1] 45  5
 ```
 
 
@@ -154,38 +146,84 @@ qplot(Petal.Width,Sepal.Width,colour=Species,data=training)
 
 ## Iris petal widths/sepal width
 
-```{r createTree, dependson="trainingTest", cache=TRUE}
+
+```r
+library(ggplot2)
+qplot(Petal.Width,Sepal.Width,colour=Species,data=training)
+```
+
+![](PredictingWithTrees_files/figure-html/unnamed-chunk-2-1.png) 
+
+
+---
+
+## Iris petal widths/sepal width
+
+
+```r
 library(caret)
 modFit <- train(Species ~ .,method="rpart",data=training)
 print(modFit$finalModel)
+```
+
+```
+## n= 105 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+## 1) root 105 70 setosa (0.33333333 0.33333333 0.33333333)  
+##   2) Petal.Length< 2.5 35  0 setosa (1.00000000 0.00000000 0.00000000) *
+##   3) Petal.Length>=2.5 70 35 versicolor (0.00000000 0.50000000 0.50000000)  
+##     6) Petal.Width< 1.75 36  2 versicolor (0.00000000 0.94444444 0.05555556) *
+##     7) Petal.Width>=1.75 34  1 virginica (0.00000000 0.02941176 0.97058824) *
 ```
 
 ---
 
 ## Plot tree
 
-```{r, dependson="createTree", fig.height=4.5, fig.width=4.5}
+
+```r
 plot(modFit$finalModel, uniform=TRUE, 
       main="Classification Tree")
 text(modFit$finalModel, use.n=TRUE, all=TRUE, cex=.8)
 ```
+
+![](PredictingWithTrees_files/figure-html/unnamed-chunk-3-1.png) 
 
 
 ---
 
 ## Prettier plots
 
-```{r, dependson="createTree", fig.height=4.5, fig.width=4.5}
+
+```r
 library(rattle)
 fancyRpartPlot(modFit$finalModel)
 ```
+
+![](PredictingWithTrees_files/figure-html/unnamed-chunk-4-1.png) 
 
 ---
 
 ## Predicting new values
 
-```{r newdata, dependson="createTree", fig.height=4.5, fig.width=4.5, cache=TRUE}
+
+```r
 predict(modFit,newdata=testing)
+```
+
+```
+##  [1] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [7] setosa     setosa     setosa     setosa     setosa     setosa    
+## [13] setosa     setosa     setosa     versicolor versicolor versicolor
+## [19] versicolor versicolor versicolor versicolor versicolor versicolor
+## [25] versicolor versicolor versicolor versicolor versicolor versicolor
+## [31] virginica  versicolor virginica  virginica  virginica  virginica 
+## [37] virginica  versicolor virginica  virginica  virginica  versicolor
+## [43] virginica  virginica  virginica 
+## Levels: setosa versicolor virginica
 ```
 
 ---

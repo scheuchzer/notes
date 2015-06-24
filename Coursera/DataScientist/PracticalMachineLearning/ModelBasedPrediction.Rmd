@@ -12,6 +12,9 @@ url:
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
+output:
+  html_document:
+    keep_md: true
 ---
 
 
