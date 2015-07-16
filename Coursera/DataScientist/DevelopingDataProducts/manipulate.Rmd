@@ -1,0 +1,36 @@
+---
+title: "manipulate"
+author: "Thomas Scheuchzer <thomas.scheuchzer@gmx.net>"
+date: "7. Juli 2015"
+output: html_document
+---
+
+```{r}
+library(manipulate)
+```
+
+- slider
+- checkbox
+- picker
+
+Example 1
+
+```
+manipulate(plot(1:x), x = slider(1, 100))
+```
+
+Example 2
+
+```
+library(UsingR)
+data(galton)
+myHist <- function(mu) {
+  hist(galton$child, xlab='child height', col='lightblue', name='Histogram')
+      lines(c(mu, mu), c(0,200), col='red', lwd=5)
+      mse <- mean((galton$child - mu)^2)
+      text(63, 150, paste('mu = ', mu))
+      text(63, 140, paste('MSE = ', mse))  
+}
+
+manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
+```

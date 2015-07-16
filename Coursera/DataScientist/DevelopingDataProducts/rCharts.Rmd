@@ -1,0 +1,45 @@
+---
+title: "rCharts"
+author: "Thomas Scheuchzer <thomas.scheuchzer@gmx.net>"
+date: "7. Juli 2015"
+output: html_document
+---
+
+based on http://nvd3.org/
+
+
+```
+require(devtools)
+install_github('rCharts', 'ramnathv')
+```
+
+```
+require('rCharts')
+haireye <- as.data.frame(HairEyeColor)
+n1 <- nPlot(Freq ~ Hair, group = 'Eye', type = 'multiBarChart', data = subset(haireye, Sex == 'Male'))
+n1$save('n1.html', cdn=TRUE)
+# plot in RStudio
+n1
+# embed in slidfy
+cat('<iframe src="n1.html" width=100% height=600></iframe>')
+```
+
+## How to get the js/html or publish an rChart
+Now you can add whatever you'd like
+```
+require('rjson')
+r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = "point", color = "gear")
+r1$print("chart1") # print out the js 
+r1$save('myPlot.html') #save as html file
+r1$publish('myPlot', host = 'gist') # save to gist, rjson required
+r1$publish('myPlot', host = 'rpubs') # save to rpubs
+```
+
+
+# Other Plots by rCharts
+http://ramnathv.github.io/rCharts/
+## morris
+## xCharts
+## Leaflet
+## Rickshaw
+## highchart

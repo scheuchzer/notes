@@ -1,0 +1,15 @@
+---
+title: "googleVis"
+author: "Thomas Scheuchzer <thomas.scheuchzer@gmx.net>"
+date: "7. Juli 2015"
+output: html_document
+---
+
+```{r} 
+#,results="asis"}
+suppressPackageStartupMessages(library(googleVis))
+M <- gvisMotionChart(Fruits, "Fruit", "Year", options = list(width=600, height=400))
+M
+#slidify
+#print(M)
+```
